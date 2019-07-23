@@ -1,0 +1,12 @@
+Kindly find task details blow.
+
+Contact List UI Task 
+using Angular and whatever css framework build app of two states contact list and add contact as describe in attachments
+
+Key Factors:
+Use Angular in app
+CSS - matching design
+App Structure
+Bug free
+Animation
+Take decisions in any missing info about UI or UX.
