@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-contacts-list-item',
@@ -7,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ContactsListItemComponent implements OnInit {
 
+  @Input() imageSource: string;
+  @Input() contactName: string;
+  @Input() contactInfo: string;
   constructor() { }
 
   ngOnInit() {

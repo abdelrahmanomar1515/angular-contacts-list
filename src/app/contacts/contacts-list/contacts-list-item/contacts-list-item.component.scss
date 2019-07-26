@@ -1,0 +1,22 @@
+:host {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 0.3rem;
+}
+img {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+}
+.contact-details {
+  margin-left: 0.8rem;
+  h4 {
+    color: lighten($color: #000000, $amount: 40);
+    font-weight: 500;
+    font-size: 1.2rem;
+  }
+  p {
+    color: lighten($color: #000000, $amount: 50);
+  }
+}
