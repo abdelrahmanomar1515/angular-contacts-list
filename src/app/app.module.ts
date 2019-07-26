@@ -15,7 +15,6 @@ import { ContactsModule } from './contacts/contacts.module';
     AppRoutingModule,
     ContactsModule
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
