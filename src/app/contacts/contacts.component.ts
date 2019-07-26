@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { map } from 'rxjs/operators';
-import { ContactsService } from './contacts.service';
 
 @Component({
   selector: 'app-contacts',
@@ -9,8 +7,7 @@ import { ContactsService } from './contacts.service';
 })
 export class ContactsComponent implements OnInit {
 
-  contacts$ = this.contactsService.getContacts().pipe(map((res: any) => res.data))
-  constructor(private contactsService: ContactsService) { }
+  constructor() { }
 
   ngOnInit() {
   }

@@ -1,2 +1,7 @@
-<app-contacts-list-item [imageSource]="'https://www.placehold.it/30x30'" [contactInfo]="'dummy@dummy.com'"
-  [contactName]="'Adam Sanders'"></app-contacts-list-item>
+<div class="input-container">
+  <input #input type="text" placeholder="Search Contacts">
+</div>
+<div *ngIf="vm$ | async as vm">
+  <app-contacts-list-item *ngFor="let contact of vm.contacts" imageSource="https://www.placehold.it/30x30"
+    [contactInfo]="getContactInfo(contact)" [contactName]="getContactName(contact)"></app-contacts-list-item>
+</div>
