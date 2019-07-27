@@ -1,7 +1,24 @@
 <div class="input-container">
   <input #input type="text" placeholder="Search Contacts">
 </div>
-<div *ngIf="vm$ | async as vm">
-  <app-contacts-list-item *ngFor="let contact of vm.contacts" imageSource="https://www.placehold.it/30x30"
-    [contactInfo]="getContactInfo(contact)" [contactName]="getContactName(contact)"></app-contacts-list-item>
+<div class="contact-list-container">
+  <ul *ngIf="vm$ | async as vm" class="contacts-list">
+    <li *ngFor="let contact of vm.contacts">
+      <app-contacts-list-item *ngIf="contact.firstName; else listIndex" imageSource="https://www.placehold.it/30x30"
+        [contactInfo]="getContactInfo(contact)" [contactName]="getContactName(contact)"></app-contacts-list-item>
+
+      <ng-template #listIndex>
+        <div #alphabet *ngIf="contact.index" class="list-index" [id]="contact.index">
+          {{ contact.index }}
+        </div>
+      </ng-template>
+    </li>
+  </ul>
+  <ul class="alphabet-navigation">
+    <li class="alphabet-navigation-item" (click)="goToItem(i)" *ngFor="let letter of alphabet; let i = index;">
+      <a>
+        {{ letter }}
+      </a>
+    </li>
+  </ul>
 </div>

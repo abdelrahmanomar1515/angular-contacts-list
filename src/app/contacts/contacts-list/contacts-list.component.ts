@@ -1,8 +1,9 @@
-import { AfterViewInit, Component, ViewChild, ElementRef } from '@angular/core';
+import { AfterViewInit, Component, ViewChild, ElementRef, ViewChildren, QueryList } from '@angular/core';
 import { fromEvent, Observable, combineLatest } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, startWith } from "rxjs/operators";
 import { ContactsService } from '../contacts.service';
 import { Contact } from '../models/contact';
+import { ContactsListItemComponent } from './contacts-list-item/contacts-list-item.component';
 @Component({
   selector: 'app-contacts-list',
   templateUrl: './contacts-list.component.html',
@@ -13,12 +14,15 @@ export class ContactsListComponent implements AfterViewInit {
   contacts$: Observable<Contact[]> = this.contactsService.getContacts().pipe(map((res: any) => res.data));
   terms$: Observable<any>;
   vm$: any;
+  alphabet: string[] = "abcdefghijklmnopqrstuvwxyz".toUpperCase().split('');
 
   @ViewChild('input', { static: true }) searchInput: ElementRef;
-
+  @ViewChildren('alphabet') listIndices;
   constructor(private contactsService: ContactsService) { }
 
+
   ngAfterViewInit(): void {
+
     this.terms$ = fromEvent<any>(this.searchInput.nativeElement, 'keyup')
       .pipe(
         map(event => event.target.value),
@@ -35,14 +39,26 @@ export class ContactsListComponent implements AfterViewInit {
           delete obj[key];
         }
       }
-      return newObj
+      return newObj;
     };
     this.vm$ = combineLatest(this.contacts$, this.terms$)
       .pipe(map(([contacts, term]) => {
-        const filteredContacts = contacts.map(filterObject).filter(contact => {
+        const filteredContacts: Contact[] = contacts.map(filterObject).filter(contact => {
           return JSON.stringify(contact).toLowerCase().includes(term && term.toLowerCase());
         });
-        return { contacts: filteredContacts, term };
+
+        let labelledContactsList = [];
+        let firstLetter = "";
+        for (let i in filteredContacts) {
+          // Marking a letter only if first name for contact exists
+          let currentLetter = filteredContacts[i].firstName && filteredContacts[i].firstName[0].toUpperCase();
+          if (currentLetter !== firstLetter) {
+            firstLetter = currentLetter;
+            labelledContactsList.push({ index: firstLetter });
+          }
+          labelledContactsList.push(filteredContacts[i]);
+        }
+        return { contacts: labelledContactsList, term };
       })
       );
   }
@@ -56,4 +72,12 @@ export class ContactsListComponent implements AfterViewInit {
     return contact.mobileNumber || contact.email;
   }
 
+  goToItem(index: number) {
+    let elToGoTo;
+    while (!elToGoTo) {
+      elToGoTo = this.listIndices.find(el => el.nativeElement.id === this.alphabet[index]);
+      index--;
+    }
+    elToGoTo.nativeElement.scrollIntoView();
+  }
 }
