@@ -12,7 +12,14 @@ li {
   width: 100%;
   box-sizing: border-box;
   display: float;
+  hr {
+    height: 1px;
+    width: calc(100% - 2.5rem);
+    background-color: lighten($color: #000000, $amount: 80);
+    border: none;
+  }
 }
+
 .alphabet-navigation {
   position: fixed;
   left: calc(100% - 1.5rem);

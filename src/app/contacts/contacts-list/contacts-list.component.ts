@@ -72,6 +72,11 @@ export class ContactsListComponent implements AfterViewInit {
     return contact.mobileNumber || contact.email;
   }
 
+  shouldAddDivider(index: number, contacts) {
+    let item = contacts[index];
+    let nextItem = contacts[index + 1];
+    return item.firstName && (nextItem.firstName || nextItem.lastName);
+  }
   goToItem(index: number) {
     let elToGoTo;
     while (!elToGoTo) {
