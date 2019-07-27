@@ -1,9 +1,8 @@
-import { AfterViewInit, Component, ViewChild, ElementRef, ViewChildren, QueryList } from '@angular/core';
-import { fromEvent, Observable, combineLatest } from 'rxjs';
+import { AfterViewInit, Component, ElementRef, ViewChild, ViewChildren } from '@angular/core';
+import { combineLatest, fromEvent, Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, startWith } from "rxjs/operators";
 import { ContactsService } from '../contacts.service';
 import { Contact } from '../models/contact';
-import { ContactsListItemComponent } from './contacts-list-item/contacts-list-item.component';
 @Component({
   selector: 'app-contacts-list',
   templateUrl: './contacts-list.component.html',
@@ -11,7 +10,6 @@ import { ContactsListItemComponent } from './contacts-list-item/contacts-list-it
 })
 export class ContactsListComponent implements AfterViewInit {
 
-  contacts$: Observable<Contact[]> = this.contactsService.getContacts().pipe(map((res: any) => res.data));
   terms$: Observable<any>;
   vm$: any;
   alphabet: string[] = "abcdefghijklmnopqrstuvwxyz".toUpperCase().split('');
@@ -41,8 +39,10 @@ export class ContactsListComponent implements AfterViewInit {
       }
       return newObj;
     };
-    this.vm$ = combineLatest(this.contacts$, this.terms$)
+    this.vm$ = combineLatest(this.contactsService.contacts$, this.terms$)
       .pipe(map(([contacts, term]) => {
+        console.log(contacts);
+        
         const filteredContacts: Contact[] = contacts.map(filterObject).filter(contact => {
           return JSON.stringify(contact).toLowerCase().includes(term && term.toLowerCase());
         });
@@ -75,7 +75,7 @@ export class ContactsListComponent implements AfterViewInit {
   shouldAddDivider(index: number, contacts) {
     let item = contacts[index];
     let nextItem = contacts[index + 1];
-    return item.firstName && (nextItem.firstName || nextItem.lastName);
+    return item.firstName && nextItem && (nextItem.firstName || nextItem.lastName);
   }
   goToItem(index: number) {
     let elToGoTo;

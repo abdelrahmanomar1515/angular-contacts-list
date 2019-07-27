@@ -1,6 +1,7 @@
 <div class="input-container">
   <input #input type="text" placeholder="Search Contacts">
 </div>
+<a [routerLink]="[ 'add' ]">Add</a>
 <div class="contact-list-container">
   <ul *ngIf="vm$ | async as vm" class="contacts-list">
     <li *ngFor="let contact of vm.contacts; let i = index;">

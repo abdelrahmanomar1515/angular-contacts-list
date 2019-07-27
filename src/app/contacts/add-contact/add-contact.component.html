@@ -18,10 +18,10 @@
       <input type="number" matInput placeholder="44" formControlName="countryCode">
       <span matPrefix>+</span>
     </mat-form-field>
-    <mat-form-field class="phone-number" floatLabel="never">
-      <input type="tel" matInput placeholder="Phone number" formControlName="phoneNumber">
-      <mat-error *ngIf="contactForm.get('phoneNumber').hasError('required')">
-        Phone number is <strong>required</strong>
+    <mat-form-field class="mobile-number" floatLabel="never">
+      <input type="tel" matInput placeholder="Mobile number" formControlName="mobileNumber">
+      <mat-error *ngIf="contactForm.get('mobileNumber').hasError('required')">
+        Mobile number is <strong>required</strong>
       </mat-error>
     </mat-form-field>
   </div>
