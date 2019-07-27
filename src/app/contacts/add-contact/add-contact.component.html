@@ -14,8 +14,8 @@
     </mat-error>
   </mat-form-field>
   <div class="full-width">
-    <mat-form-field class="country-code">
-      <input type="number" matInput formControlName="countryCode">
+    <mat-form-field class="country-code" floatLabel="never">
+      <input type="number" matInput placeholder="44" formControlName="countryCode">
       <span matPrefix>+</span>
     </mat-form-field>
     <mat-form-field class="phone-number" floatLabel="never">
@@ -35,8 +35,7 @@
     </mat-error>
   </mat-form-field>
   <button class="form-button" type="submit" mat-flat-button (click)="submitForm()" [disabled]="!contactForm.valid">
-    AddContact
+    Add Contact
   </button>
   <button class="form-button" type="reset" mat-flat-button>Cancel</button>
-
 </form>

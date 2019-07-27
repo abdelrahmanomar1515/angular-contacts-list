@@ -13,7 +13,7 @@ export class AddContactComponent {
     this.contactForm = fb.group({
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
-      countryCode: [44, [Validators.required]],
+      countryCode: ['', [Validators.required]],
       phoneNumber: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
     });
