@@ -1,5 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatInputModule, MatFormFieldModule, MatButtonModule } from '@angular/material';
 import { AddContactComponent } from './add-contact/add-contact.component';
 import { ContactsListItemComponent } from './contacts-list/contacts-list-item/contacts-list-item.component';
 import { ContactsListComponent } from './contacts-list/contacts-list.component';
@@ -18,7 +21,12 @@ import { FlexLayoutModule } from '@angular/flex-layout';
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     HttpClientModule,
+    BrowserAnimationsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
     FlexLayoutModule,
     ContactsRoutingModule
   ],

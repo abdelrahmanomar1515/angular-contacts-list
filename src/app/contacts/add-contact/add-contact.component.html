@@ -1,3 +1,38 @@
-<p>
-  add-contacts works!
-</p>
+<form class="add-contact-form" [formGroup]="contactForm">
+  <mat-form-field class="full-width">
+    <input matInput placeholder="First name" formControlName="firstName">
+    <mat-error *ngIf="contactForm.get('firstName').hasError('required')">
+      First name is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field class="full-width">
+    <input matInput placeholder="Last name" formControlName="lastName">
+    <mat-error *ngIf="contactForm.get('lastName').hasError('required')">
+      Last name is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+  <div class="full-width">
+    <mat-form-field class="country-code">
+      <input type="number" matInput formControlName="countryCode" value="44">
+      <span matPrefix>+</span>
+    </mat-form-field>
+    <mat-form-field class="phone-number" floatLabel="never">
+      <input type="tel" matInput placeholder="Phone number" formControlName="phoneNumber">
+      <mat-error *ngIf="contactForm.get('phoneNumber').hasError('required')">
+        Phone number is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <mat-form-field class="full-width">
+    <input matInput placeholder="Email" formControlName="email">
+    <mat-error *ngIf="contactForm.get('email').hasError('email') && !contactForm.get('email').hasError('required')">
+      Please enter a valid email address
+    </mat-error>
+    <mat-error *ngIf="contactForm.get('email').hasError('required')">
+      Email is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+  <button class="form-button" type="submit" mat-flat-button [disabled]="!contactForm.valid">Add Contact</button>
+  <button class="form-button" type="reset" mat-flat-button>Cancel</button>
+
+</form>
