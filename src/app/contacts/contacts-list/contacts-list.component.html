@@ -12,7 +12,7 @@
   </div>
   <ul *ngIf="vm$ | async as vm" class="contacts-list">
     <li *ngFor="let contact of vm.latestContacts; let i = index;">
-      <app-contacts-list-item *ngIf="contact.firstName;" imageSource="https://www.placehold.it/30x30"
+      <app-contacts-list-item *ngIf="contact.firstName;" [imageSource]="getImageSource(contact)"
         [contactInfo]="getContactInfo(contact)" [contactName]="getContactName(contact)"></app-contacts-list-item>
       <hr *ngIf="shouldAddDivider(i, vm.latestContacts)">
     </li>
@@ -21,7 +21,7 @@
 <div class="contact-list-container">
   <ul *ngIf="vm$ | async as vm" class="contacts-list">
     <li *ngFor="let contact of vm.contacts; let i = index;">
-      <app-contacts-list-item *ngIf="contact.firstName; else listIndex" imageSource="https://www.placehold.it/30x30"
+      <app-contacts-list-item *ngIf="contact.firstName; else listIndex" [imageSource]="getImageSource(contact)"
         [contactInfo]="getContactInfo(contact)" [contactName]="getContactName(contact)"></app-contacts-list-item>
       <hr *ngIf="shouldAddDivider(i, vm.contacts)">
       <ng-template #listIndex>

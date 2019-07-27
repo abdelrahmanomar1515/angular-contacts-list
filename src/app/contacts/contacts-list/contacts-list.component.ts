@@ -80,12 +80,16 @@ export class ContactsListComponent implements AfterViewInit {
     return contact.mobileNumber || contact.email;
   }
 
+  getImageSource(contact: Contact) {
+    return contact.image || 'https://www.placehold.it/30x30'
+  }
+
   shouldAddDivider(index: number, contacts) {
     let item = contacts[index];
     let nextItem = contacts[index + 1];
     return item.firstName && nextItem && (nextItem.firstName || nextItem.lastName);
   }
-  
+
   goToItem(index: number) {
     let elToGoTo;
     while (!elToGoTo) {
