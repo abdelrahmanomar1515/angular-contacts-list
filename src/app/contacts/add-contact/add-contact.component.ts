@@ -26,6 +26,10 @@ export class AddContactComponent {
 
   submitForm() {
     this.contactsService.addContact(this.contactForm.value)
+    this.goToContacts()
+  }
+
+  goToContacts() {
     this.router.navigateByUrl('contacts')
   }
 

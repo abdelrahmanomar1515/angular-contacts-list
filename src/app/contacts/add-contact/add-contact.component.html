@@ -34,8 +34,9 @@
       Email is <strong>required</strong>
     </mat-error>
   </mat-form-field>
-  <button class="form-button" type="submit" mat-flat-button (click)="submitForm()" [disabled]="!contactForm.valid">
+  <button class="form-button" type="submit" color="accent" mat-flat-button (click)="submitForm()"
+    [disabled]="!contactForm.valid">
     Add Contact
   </button>
-  <button class="form-button" type="reset" mat-flat-button>Cancel</button>
+  <button class="form-button" type="reset" color="primary" mat-flat-button (click)="goToContacts()">Cancel</button>
 </form>

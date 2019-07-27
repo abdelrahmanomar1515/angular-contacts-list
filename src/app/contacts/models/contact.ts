@@ -5,4 +5,5 @@ export class Contact {
     mobileNumber: string;
     firstName: string;
     lastName: string;
+    img?: string;
 }
