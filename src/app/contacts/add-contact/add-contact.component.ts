@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class AddContactComponent {
   contactForm: FormGroup;
-
+  selectedFile: ImageSnippet;
   constructor(
     private contactsService: ContactsService,
     fb: FormBuilder,
@@ -33,4 +33,21 @@ export class AddContactComponent {
     this.router.navigateByUrl('contacts')
   }
 
+  processFile(imageInput: any) {
+    const file: File = imageInput.files[0];
+    const reader = new FileReader();
+
+    reader.addEventListener('load', (event: any) => {
+      this.selectedFile = new ImageSnippet(event.target.result, file);
+    });
+
+    reader.readAsDataURL(file);
+  }
+}
+
+class ImageSnippet {
+  pending: boolean = false;
+  status: string = 'init';
+
+  constructor(public src: string, public file: File) { }
 }

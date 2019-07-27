@@ -1,6 +1,18 @@
 <form class="add-contact-form" [formGroup]="contactForm">
   <h1 class="form-header">Add a New Contact</h1>
   <hr>
+  <br>
+  <div class="my-image-upload-container">
+    <div *ngIf="selectedFile" class="img-preview-container">
+      <div class="img-preview{{selectedFile.status === 'fail' ? '-error' : ''}}"
+        [ngStyle]="{'background-image': 'url('+ selectedFile.src + ')'}">
+      </div>
+    </div>
+    <label class="image-upload-container btn btn-bwm">
+      <span>Add Photo</span>
+      <input #imageInput type="file" accept="image/*" (change)="processFile(imageInput)">
+    </label>
+  </div>
   <mat-form-field class="full-width">
     <input matInput placeholder="First name" formControlName="firstName">
     <mat-error *ngIf="contactForm.get('firstName').hasError('required')">
