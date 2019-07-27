@@ -25,7 +25,8 @@ export class AddContactComponent {
   }
 
   submitForm() {
-    let newContact = { ...this.contactForm.value, image: this.selectedFile.src };
+    let imageSource = this.selectedFile && this.selectedFile.src
+    let newContact = { ...this.contactForm.value, image: imageSource };
     this.contactsService.addContact(newContact)
     this.goToContacts()
   }
