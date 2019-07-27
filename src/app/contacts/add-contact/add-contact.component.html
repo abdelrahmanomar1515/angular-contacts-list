@@ -13,7 +13,7 @@
   </mat-form-field>
   <div class="full-width">
     <mat-form-field class="country-code">
-      <input type="number" matInput formControlName="countryCode" value="44">
+      <input type="number" matInput formControlName="countryCode">
       <span matPrefix>+</span>
     </mat-form-field>
     <mat-form-field class="phone-number" floatLabel="never">
@@ -32,7 +32,9 @@
       Email is <strong>required</strong>
     </mat-error>
   </mat-form-field>
-  <button class="form-button" type="submit" mat-flat-button [disabled]="!contactForm.valid">Add Contact</button>
+  <button class="form-button" type="submit" mat-flat-button (click)="submitForm()" [disabled]="!contactForm.valid">
+    AddContact
+  </button>
   <button class="form-button" type="reset" mat-flat-button>Cancel</button>
 
 </form>
