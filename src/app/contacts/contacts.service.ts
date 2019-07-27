@@ -10,6 +10,8 @@ import { map } from 'rxjs/operators';
 export class ContactsService {
   contacts: BehaviorSubject<Contact[]> = new BehaviorSubject([]);
   contacts$: Observable<Contact[]> = this.contacts.asObservable();
+  latestContacts: BehaviorSubject<Contact[]> = new BehaviorSubject([]);
+  latestContacts$: Observable<Contact[]> = this.latestContacts.asObservable();
 
   constructor(public http: HttpClient) {
     this.getContacts().pipe(
@@ -18,10 +20,21 @@ export class ContactsService {
       contacts = contacts.filter(contact => contact.firstName || contact.lastName || contact.mobileNumber || contact.email)
       this.contacts.next(contacts);
     });
+
+    this.getLatestContacts().pipe(
+      map((res: any) => res.data)
+    ).subscribe((contacts: Contact[]) => {
+      contacts = contacts.filter(contact => contact.firstName || contact.lastName || contact.mobileNumber || contact.email)
+      this.latestContacts.next(contacts);
+    });
   }
 
   private getContacts() {
     return this.http.get("data/contacts.json");
+  }
+
+  private getLatestContacts() {
+    return this.http.get("data/recent-contact.json");
   }
 
   public addContact(newContact: Contact) {

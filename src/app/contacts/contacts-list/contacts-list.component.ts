@@ -29,41 +29,49 @@ export class ContactsListComponent implements AfterViewInit {
         distinctUntilChanged()
       );;
 
-    // Helper function used to delete the keys that have null as a value, so that when you search null you don't get those results.
-    const filterObject = (obj) => {
-      let newObj = { ...obj };
-      for (let key in obj) {
-        if (obj[key] == null) {
-          delete obj[key];
-        }
-      }
-      return newObj;
-    };
-    this.vm$ = combineLatest(this.contactsService.contacts$, this.terms$)
-      .pipe(map(([contacts, term]) => {
-        console.log(contacts);
-        
-        const filteredContacts: Contact[] = contacts.map(filterObject).filter(contact => {
-          return JSON.stringify(contact).toLowerCase().includes(term && term.toLowerCase());
-        });
 
-        let labelledContactsList = [];
-        let firstLetter = "";
-        for (let i in filteredContacts) {
-          // Marking a letter only if first name for contact exists
-          let currentLetter = filteredContacts[i].firstName && filteredContacts[i].firstName[0].toUpperCase();
-          if (currentLetter !== firstLetter) {
-            firstLetter = currentLetter;
-            labelledContactsList.push({ index: firstLetter });
-          }
-          labelledContactsList.push(filteredContacts[i]);
-        }
-        return { contacts: labelledContactsList, term };
+    this.vm$ = combineLatest(this.contactsService.contacts$, this.terms$, this.contactsService.latestContacts$)
+      .pipe(map(([contacts, term, latestContacts]) => {
+        return {
+          contacts: this.addIndicesToContacts(this.filterContacts(contacts, term)),
+          term,
+          latestContacts: this.filterContacts(latestContacts, term)
+        };
       })
       );
   }
 
+  // Helper function used to delete the keys that have null as a value, so that when you search null you don't get those results.
+  private filterObject(obj) {
+    let newObj = { ...obj };
+    for (let key in obj) {
+      if (obj[key] == null) {
+        delete obj[key];
+      }
+    }
+    return newObj;
+  };
 
+  private filterContacts(contacts, term): Contact[] {
+    return contacts.map(this.filterObject).filter(contact => {
+      return JSON.stringify(Object.values(contact)).toLowerCase().includes(term && term.toLowerCase());
+    });
+  }
+
+  private addIndicesToContacts(contacts: Contact[]): Contact[] {
+    let labelledContactsList = [];
+    let firstLetter = "";
+    for (let i in contacts) {
+      // Marking a letter only if first name for contact exists
+      let currentLetter = contacts[i].firstName && contacts[i].firstName[0].toUpperCase();
+      if (currentLetter !== firstLetter) {
+        firstLetter = currentLetter;
+        labelledContactsList.push({ index: firstLetter });
+      }
+      labelledContactsList.push(contacts[i]);
+    }
+    return labelledContactsList;
+  }
   getContactName(contact: Contact) {
     return (contact.firstName || '') + ' ' + (contact.lastName || '');
   }
@@ -77,6 +85,7 @@ export class ContactsListComponent implements AfterViewInit {
     let nextItem = contacts[index + 1];
     return item.firstName && nextItem && (nextItem.firstName || nextItem.lastName);
   }
+  
   goToItem(index: number) {
     let elToGoTo;
     while (!elToGoTo) {

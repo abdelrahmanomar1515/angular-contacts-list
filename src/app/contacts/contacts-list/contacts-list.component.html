@@ -1,7 +1,23 @@
 <div class="input-container">
   <input #input type="text" placeholder="Search Contacts">
 </div>
-<a [routerLink]="[ 'add' ]">Add</a>
+<div class="add-new-contact">
+  <a [routerLink]="[ 'add' ]">Add New Contact</a>
+  <a class="plus-sign" [routerLink]="[ 'add' ]">+</a>
+</div>
+<hr class="full-width">
+<div>
+  <div class="list-index">
+    Latest Contacts
+  </div>
+  <ul *ngIf="vm$ | async as vm" class="contacts-list">
+    <li *ngFor="let contact of vm.latestContacts; let i = index;">
+      <app-contacts-list-item *ngIf="contact.firstName;" imageSource="https://www.placehold.it/30x30"
+        [contactInfo]="getContactInfo(contact)" [contactName]="getContactName(contact)"></app-contacts-list-item>
+      <hr *ngIf="shouldAddDivider(i, vm.latestContacts)">
+    </li>
+  </ul>
+</div>
 <div class="contact-list-container">
   <ul *ngIf="vm$ | async as vm" class="contacts-list">
     <li *ngFor="let contact of vm.contacts; let i = index;">

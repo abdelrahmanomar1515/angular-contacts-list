@@ -12,7 +12,7 @@ export class AddContactComponent {
   contactForm: FormGroup;
 
   constructor(
-    private contactsService: ContactsService, 
+    private contactsService: ContactsService,
     fb: FormBuilder,
     private router: Router) {
     this.contactForm = fb.group({
@@ -26,7 +26,6 @@ export class AddContactComponent {
 
   submitForm() {
     this.contactsService.addContact(this.contactForm.value)
-    console.log(this.contactForm)
     this.router.navigateByUrl('contacts')
   }
 
